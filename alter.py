@@ -1,4 +1,4 @@
-#[v0.9.5]
+#[v0.9.6]
 
 ########################################################################################
 #               PYTHON-TWITTER-NLP MODULE "ALTER" -- PRELIMINARY CODE                  #
@@ -60,6 +60,7 @@ def getAvgPolarity(l1):
 
 '''returns global sentiment of Trends'''
 def allTrends():
+
 	#Twitter OAuth
 	auth = tweepy.OAuthHandler(TWTAPIKEY, TWTAPISEC)
 	auth.set_access_token(TWTACCTOK, TWTACCSEC)
@@ -103,9 +104,60 @@ def allTrends():
 		print('Twitter is ANGRY.')
 
 	print("-----------------------------------------")
-	print("[alter -- v0.9.5]")
+	print("[alter -- v0.9.6]")
+	
+	
+#def likenessGroup():
 
+	#TODO: read in Trends and perform various methods of subjective grouping
+	
 
+class Singul:
+
+	#TODO:def1(tweepick)
+		#print available trends, numbered
+		#allow selection of one based on number or name match
+		#analysis
+		
+	def tweepick(): 
+	
+		#Twitter OAuth
+		auth = tweepy.OAuthHandler(TWTAPIKEY, TWTAPISEC)
+		auth.set_access_token(TWTACCTOK, TWTACCSEC)
+		api = tweepy.API(auth)
+		trends = api.trends_place(1)
+		
+		#atomize trends from the returned list
+		regex = r"(#[a-zA-Z]+)"
+		joined = str(trends)
+		trends = re.findall(regex, joined)
+	
+		#print list of captured trends and remove hashtags
+		print("TRENDS:")
+		print("-----------------------------------------")
+		formatted_trends = []
+		for t in trends:
+			if trends.index(t) >= 10:
+				print(trends.index(t), "--", t)
+			else:
+				print(str('0') + str(trends.index(t)), "--", t)
+			t_format = t.replace("#", "")
+			formatted_trends.append(t_format)
+	
+		#get user input and store specific trend at that index for analysis
+		
+		tpkQuit = False
+		print("select Trend for analysis [ENTER NUMBER] or 'q' to quit")
+		while(not tpkQuit):
+			userIndex = input()
+			if userIndex is "q":
+				tpkQuit = True
+				break
+			singulton = trends[int(userIndex)]
+			components = splitter(singulton)
+			print(components)
+		print("exiting Singul...")
+		
 ########################################################################################
 #                  AUTHOR: ALEC GOLDSTEIN, FIREFLY HACKS -- 2019                       #
 ########################################################################################
